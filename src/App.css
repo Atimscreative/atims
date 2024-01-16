@@ -1,0 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:wght@200;300;400;500;600;700&display=swap");
+
+* {
+  @apply m-0 box-border;
+}
+
+html {
+  @apply scroll-smooth;
+}
+
+body {
+  @apply bg-neutral-950 font-urbanist font-normal text-neutral-400 antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  @apply font-semibold text-neutral-50;
+}
+
+div,
+section,
+header,
+button,
+label,
+a {
+  @apply relative;
+}
+
+.wrapper {
+  @apply container mx-auto px-4 xl:max-w-[1140px];
+}
+
+.nav-link {
+  @apply text-3xl transition-colors duration-300 hover:text-main-200;
+}
+
+.btn {
+  @apply inline-flex rounded-lg px-6 py-3 duration-300;
+}
+
+/* CONTACT FORM */
+
+.contact-form label > span {
+  @apply pointer-events-none absolute left-1 top-3 bg-primary-300 font-medium text-primary-50 duration-300;
+}
+
+.contact-form input,
+.contact-form textarea {
+  @apply w-full rounded-lg border border-primary-100 bg-transparent p-3  pt-4 focus:border-main-100 focus:ring-main-100;
+}
+
+.contact-form option {
+  @apply border-none bg-primary-400 text-xs;
+}
+
+.contact-form input:focus ~ span,
+.contact-form input:valid ~ span,
+.contact-form textarea:focus ~ span,
+.contact-form textarea:valid ~ span {
+  @apply -top-3 px-2 text-sm font-normal;
+}
