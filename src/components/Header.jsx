@@ -22,7 +22,11 @@ const Header = () => {
         }`}
       >
         <nav className="wrapper flex items-center justify-between">
-          <img src={Logo} alt="Abegunde Timilehin Logo" />
+          <img
+            src={Logo}
+            className="w-[100px] sm:w-[120px]"
+            alt="Abegunde Timilehin Logo"
+          />
 
           <div className="hidden lg:inline-flex lg:gap-6">
             <Link>About</Link>
@@ -34,7 +38,7 @@ const Header = () => {
           <Link
             to="https://wa.me/2348089134442"
             target="_blank"
-            className="flex items-center gap-2"
+            className="hidden items-center gap-2"
           >
             <span className="flex h-6 w-6 items-center justify-center rounded-full bg-main-200 text-neutral-50">
               <BsWhatsapp size={12} />

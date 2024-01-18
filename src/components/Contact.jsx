@@ -41,7 +41,7 @@ const Contact = () => {
                 </Link>
               </div>
             </div>
-            <div className="mt-8 rounded-lg border border-neutral-800 bg-neutral-900 p-8 shadow-[0_0_30px_rgba(0_0_0_0.6)] md:mx-auto md:mt-16 md:w-10/12 lg:mt-0 lg:w-[50%]">
+            <div className="mt-8 rounded-lg border border-neutral-800 bg-neutral-900 bg-opacity-50 p-8 shadow-[0_0_30px_rgba(0_0_0_0.6)] md:mx-auto md:mt-16 md:w-10/12 lg:mt-0 lg:w-[50%]">
               <h3 className="mb-8 text-lg font-semibold md:text-xl">
                 Write your message
               </h3>

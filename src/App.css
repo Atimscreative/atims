@@ -43,9 +43,8 @@ a {
 /* CONTACT FORM */
 
 .contact-form label > span {
-  @apply pointer-events-none absolute left-1 top-3 bg-primary-300 font-medium text-primary-50 duration-300;
+  @apply pointer-events-none absolute left-1 top-3 bg-[#111111] font-medium text-primary-50 duration-300;
 }
-
 .contact-form input,
 .contact-form textarea {
   @apply w-full rounded-lg border border-primary-100 bg-transparent p-3  pt-4 focus:border-main-100 focus:ring-main-100;

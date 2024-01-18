@@ -6,7 +6,7 @@ const Hero = () => {
   return (
     <section
       id="hero"
-      className="min-h-[30vh] w-full bg-[url(./assets/line.png)] bg-cover bg-center pb-10 lg:h-screen"
+      className="min-h-[30vh] w-full bg-[url(./assets/line.png)] bg-cover bg-center pb-10 lg:pb-16 lg:pt-20 xl:h-screen  xl:p-0"
     >
       <div className="wrapper flex h-full items-center justify-center">
         <div className="flex flex-col-reverse items-center justify-center pt-24 lg:flex-row-reverse lg:justify-center lg:gap-x-14">
@@ -21,24 +21,28 @@ const Hero = () => {
             </p>
             <Link
               to="/"
-              className="btn bg-gradient-to-tr from-blue-500 to-blue-700 text-white"
+              className="btn hover:shadow-btn bg-gradient-to-tr from-main-100 to-main-200 text-white duration-500 hover:-translate-y-1"
             >
               Contact Me
             </Link>
             <Link
               to="projects"
-              className="btn items-center gap-2 hover:text-white"
+              className="btn group items-center gap-2 duration-300 hover:text-white"
             >
               View Portfolio
-              <BsArrowUpRight size={20} />
+              <span className="duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+                <BsArrowUpRight size={20} />
+              </span>
             </Link>
           </div>
           {/* PROFILE IMAGE */}
-          <img
-            src={ProfilePic}
-            alt="Abegunde Timilehin Photo"
-            className="mb-8 h-[200px] w-[200px] rounded-full border-[6px] bg-primary-300 bg-opacity-25 object-cover object-top backdrop-blur-2xl lg:m-0 lg:h-[400px] lg:w-[400px]"
-          />
+          <div className="mb-8 flex h-[200px] w-[200px] items-center justify-center rounded-full bg-neutral-900 bg-opacity-50 backdrop-blur-2xl lg:mb-0 lg:h-[400px] lg:w-[400px]">
+            <img
+              src={ProfilePic}
+              alt="Abegunde Timilehin Photo"
+              className=" h-[150px] w-[150px] rounded-full border-[6px] bg-opacity-25 bg-gradient-to-b from-neutral-800 to-neutral-900 object-cover object-top backdrop-blur-2xl lg:h-[300px] lg:w-[300px]"
+            />
+          </div>
         </div>
       </div>
     </section>

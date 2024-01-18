@@ -59,7 +59,7 @@ const Reviews = () => {
             clients and team
           </h2>
         </div>
-        <div className="flex items-center justify-center lg:mx-auto lg:w-10/12">
+        <div className="flex items-center justify-center lg:mx-auto lg:w-9/12">
           <div className="testimonial-slider min-h-[320px] w-full max-w-[500px] overflow-hidden md:max-w-[600px] lg:max-w-[700px]">
             {testimonials.map((review, index) => (
               <div

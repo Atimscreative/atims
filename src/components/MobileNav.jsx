@@ -5,8 +5,8 @@ const MobileNav = ({ openMenu }) => {
   return (
     <>
       <section
-        className={`fixed right-0 top-0 z-[999] flex h-full w-full items-start justify-center  bg-primary-400 transition-opacity duration-500 ${
-          openMenu ? "opacity-100" : "invisible opacity-0"
+        className={`fixed top-0 z-[999] flex h-full w-full items-start justify-center  bg-neutral-950 duration-500 ${
+          openMenu ? "right-0" : "-right-full"
         }`}
       >
         <div

@@ -21,6 +21,9 @@ export default {
           400: "#090a0a",
         },
       },
+      boxShadow: {
+        btn: "0 10px 30px -10px rgba(51, 154, 240, 0.3)",
+      },
     },
   },
   plugins: [Forms],
