@@ -4,7 +4,7 @@ import { HiOutlineMenuAlt4 } from "react-icons/hi";
 import { IoCloseOutline } from "react-icons/io5";
 import { useState } from "react";
 import MobileNav from "./MobileNav";
-import { BsWhatsapp } from "react-icons/bs";
+import Resume from "../assets/Abegunde-Resume.pdf";
 
 const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
@@ -28,7 +28,7 @@ const Header = () => {
             alt="Abegunde Timilehin Logo"
           />
 
-          <div className="hidden lg:inline-flex lg:gap-6">
+          <div className="hidden text-neutral-100 lg:inline-flex lg:gap-10">
             <Link>About</Link>
             <Link>Projects</Link>
             <Link>Services</Link>
@@ -36,14 +36,12 @@ const Header = () => {
           </div>
 
           <Link
-            to="https://wa.me/2348089134442"
+            to={Resume}
             target="_blank"
-            className="hidden items-center gap-2"
+            className="group hidden items-center gap-2 lg:flex"
           >
-            <span className="flex h-6 w-6 items-center justify-center rounded-full bg-main-200 text-neutral-50">
-              <BsWhatsapp size={12} />
-            </span>
-            <span className="tracking-wide">+2348089134442</span>
+            <span className="flex h-4 w-4 items-center justify-center rounded-full bg-main-100 bg-opacity-20 duration-300 after:h-2 after:w-2 after:rounded-full after:bg-main-100 after:shadow-sm group-hover:scale-75"></span>
+            <span className="text-neutral-100">My Resume</span>
           </Link>
 
           <button
@@ -65,7 +63,7 @@ const Header = () => {
               <IoCloseOutline size={32} color="#fff" />
             </span>
           </button>
-          <MobileNav openMenu={openMenu} />
+          <MobileNav openMenu={openMenu} resume={Resume} />
         </nav>
       </header>
     </>

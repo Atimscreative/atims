@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 // eslint-disable-next-line
-const MobileNav = ({ openMenu }) => {
+const MobileNav = ({ openMenu, resume }) => {
   return (
     <>
       <section
@@ -15,6 +15,17 @@ const MobileNav = ({ openMenu }) => {
           <Link className="nav-link">About</Link>
           <Link className="nav-link">Projects</Link>
           <Link className="nav-link">Contact</Link>
+
+          <div className="mt-8 border-t border-neutral-700 pt-8">
+            <Link
+              to={resume}
+              target="_blank"
+              className="group flex items-center gap-2"
+            >
+              <span className="flex h-4 w-4 items-center justify-center rounded-full bg-main-100 bg-opacity-20 duration-300 after:h-2 after:w-2 after:rounded-full after:bg-main-100 after:shadow-sm group-hover:scale-75"></span>
+              <span className="text-2xl text-neutral-100">My Resume</span>
+            </Link>
+          </div>
         </div>
       </section>
     </>

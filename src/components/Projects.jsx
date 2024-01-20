@@ -1,48 +1,58 @@
-import Temp from "../assets/temp.png";
-import Temp2 from "../assets/temp2.png";
-import Temp3 from "../assets/temp3.png";
 import Heading from "./Heading";
+import { Link } from "react-router-dom";
+import Porker from "../assets/porker.png";
+import Morero from "../assets/morero.png";
+import Magenta from "../assets/magenta.png";
+import Quickpay from "../assets/quickpay.png";
+import Bankify from "../assets/bankify.png";
+import Getlinked from "../assets/getlinked.png";
 
 const myProjects = [
   {
-    prototype: Temp2,
+    prototype: Quickpay,
     tools: ["HTML", "CSS", "JavaScript"],
     title: "QuickPay",
-    description: "Send money to your Family & Friends efficiently.",
+    link: "https://atimscreative.github.io/quickpay/",
+    description: "Send money to your Family and Friends efficiently.",
     active: true,
   },
   {
-    prototype: Temp2,
+    prototype: Getlinked,
     tools: ["React", "JavaScript", "Tailwind CSS"],
     title: "Getlinked",
-    description: "A Webapp built during a 3 day UI challenge",
+    link: "https://atimscreative.github.io/getlinked/",
+    description: "A Web Application built during a 3days UI challenge",
     active: true,
   },
   {
-    prototype: Temp2,
+    prototype: Magenta,
     tools: ["HTML", "CSS/SCSS", "JavaScript"],
     title: "Magenta City",
+    link: "https://atimscreative.github.io/magentacity/",
     description: "Nutrient-Rich Plant-Based Meal and Snack Recipes",
     active: true,
   },
   {
-    prototype: Temp3,
+    prototype: Morero,
     tools: ["CodeIgniter(PHP)", "Bootstrap", "Web App"],
     title: "Morero.co.uk",
+    link: "https://morero.co.uk/",
     description: "Digital Construction Project Management Software",
     active: false,
   },
   {
-    prototype: Temp3,
+    prototype: Porker,
     tools: ["React", "TypeScript", "E-commerce"],
     title: "Porker Hut",
+    link: "https://pokerhut-dev.vercel.app/",
     description: "Agro Commerce – Livestock, Feeds, and Pig Carcasses",
     active: false,
   },
   {
-    prototype: Temp,
+    prototype: Bankify,
     tools: ["React", "JavaScript", "Tailwind CSS"],
     title: "Bankify",
+    link: "https://bankify-peach.vercel.app/",
     description: "Online Banking, Instant Transfer, Swift Account Closing",
     active: false,
   },
@@ -58,15 +68,25 @@ const Projects = () => {
         />
         <div className="flex flex-wrap items-center justify-between gap-6 md:grid md:grid-cols-2 lg:grid-cols-3">
           {myProjects.map((project, index) => (
-            <div
+            <Link
+              to={project.link}
+              target="_blank"
               key={index}
-              className="w-full overflow-hidden rounded-lg bg-neutral-900 p-6 md:p-8 lg:h-[400px]"
+              className="group w-full cursor-pointer overflow-hidden rounded-lg bg-neutral-900 p-5"
             >
               <div className="w-full">
+                <span
+                  className={`mb-2 rounded-md bg-main-200 bg-opacity-10 p-2 text-xs text-main-200 ${
+                    !project.active ? "inline-block" : "hidden"
+                  }`}
+                >
+                  Coming Soon
+                </span>
                 <p className="text-sm uppercase tracking-widest">
                   {project.title}
                 </p>
-                <h3 className="mb-2 text-xl font-semibold">
+
+                <h3 className="mb-3 text-balance text-xl font-semibold">
                   {project.description}
                 </h3>
               </div>
@@ -81,18 +101,12 @@ const Projects = () => {
                 ))}
               </div>
               <img
-                src={project.prototype}
+                src={project?.prototype}
                 alt="project"
-                className="mt-20 scale-[1.18] lg:scale-150"
+                // className="mt-12 w-full duration-500 group-hover:translate-y-4 group-hover:scale-[1.2]"
+                className="mt-8 w-full duration-500 group-hover:-translate-y-1"
               />
-              <span
-                className={`absolute bottom-6 right-8  animate-bounce rounded-md border border-neutral-700 bg-neutral-300 bg-opacity-10 px-4 py-2 text-neutral-50 shadow-2xl backdrop-blur-lg ${
-                  !project.active ? "inline-block" : "hidden"
-                }`}
-              >
-                Coming Soon
-              </span>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
