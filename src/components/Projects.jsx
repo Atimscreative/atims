@@ -69,8 +69,8 @@ const Projects = () => {
         <div className="flex flex-wrap items-center justify-between gap-6 md:grid md:grid-cols-2 lg:grid-cols-3">
           {myProjects.map((project, index) => (
             <Link
-              to={project.link}
-              target="_blank"
+              to={project.active ? project.link : "#"}
+              target={project.active ? "_blank" : "_self"}
               key={index}
               className="group w-full cursor-pointer overflow-hidden rounded-lg bg-neutral-900 p-5"
             >
