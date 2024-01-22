@@ -53,14 +53,14 @@ const Reviews = () => {
     <section className="py-16">
       <div className="wrapper">
         <div className="mb-20 text-center sm:mx-auto md:w-[76%]">
-          <h2 className="text-2xl font-bold sm:text-3xl md:text-4xl">
+          <h2 className="review-header text-2xl font-bold sm:text-3xl md:text-4xl">
             Valuable feedbacks from
             <br />
             clients and team
           </h2>
         </div>
         <div className="flex items-center justify-center lg:mx-auto lg:w-9/12">
-          <div className="testimonial-slider min-h-[320px] w-full max-w-[500px] overflow-hidden md:max-w-[600px] lg:max-w-[700px]">
+          <div className="slider min-h-[320px] w-full max-w-[500px] overflow-hidden md:max-w-[600px] lg:max-w-[700px]">
             {testimonials.map((review, index) => (
               <div
                 key={index}

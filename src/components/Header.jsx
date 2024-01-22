@@ -1,51 +1,81 @@
 import { Link } from "react-router-dom";
+import { Link as ScrollLink } from "react-scroll";
 import Logo from "../assets/logo.svg";
 import { HiOutlineMenuAlt4 } from "react-icons/hi";
 import { IoCloseOutline } from "react-icons/io5";
-import { useState } from "react";
+import { BsArrowUpShort } from "react-icons/bs";
+import { useEffect, useState } from "react";
 import MobileNav from "./MobileNav";
 import Resume from "../assets/Abegunde-Resume.pdf";
 
 const Header = () => {
+  const [isSticky, setIsSticky] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const handleOpenMenu = () => {
     setOpenMenu((open) => !open);
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsSticky(window.scrollY >= 640);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  // BACK TO TOP
+  const handleToTop = () => {
+    window.scroll(0, 0);
+  };
+
   return (
     <>
       <header
-        className={`left-0 top-0 z-[999] w-full py-4 ${
-          window.scrollY > 300
-            ? "fixed bg-primary-400 bg-opacity-70 backdrop-blur-xl"
-            : "absolute"
+        className={`left-0 top-0 z-[999] w-full py-4 duration-300 ${
+          isSticky
+            ? "fixed translate-y-0 bg-primary-400 bg-opacity-70 shadow-lg backdrop-blur-xl"
+            : "absolute -translate-y-1"
         }`}
       >
         <nav className="wrapper flex items-center justify-between">
-          <img
-            src={Logo}
-            className="w-[100px] sm:w-[120px]"
-            alt="Abegunde Timilehin Logo"
-          />
-
+          <Link to="/">
+            <img
+              src={Logo}
+              className="nav-logo w-[100px] sm:w-[120px]"
+              alt="Abegunde Timilehin Logo"
+            />
+          </Link>
           <div className="hidden text-neutral-100 lg:inline-flex lg:gap-10">
-            <Link>About</Link>
-            <Link>Projects</Link>
-            <Link>Services</Link>
-            <Link>Contact</Link>
+            <ScrollLink to="hero" className="nav cursor-pointer">
+              About
+            </ScrollLink>
+            <ScrollLink to="projects" className="nav cursor-pointer">
+              Projects
+            </ScrollLink>
+            <ScrollLink to="services" className="nav cursor-pointer">
+              Services
+            </ScrollLink>
+            <ScrollLink to="contact" className="nav cursor-pointer">
+              Contact
+            </ScrollLink>
           </div>
 
           <Link
             to={Resume}
             target="_blank"
-            className="group hidden items-center gap-2 lg:flex"
+            download="abegunde-resume.pdf"
+            className="resume group hidden items-center gap-2 lg:flex"
           >
             <span className="flex h-4 w-4 items-center justify-center rounded-full bg-main-100 bg-opacity-20 duration-300 after:h-2 after:w-2 after:rounded-full after:bg-main-100 after:shadow-sm group-hover:scale-75"></span>
             <span className="text-neutral-100">My Resume</span>
           </Link>
 
           <button
-            className="relative z-[9999] flex h-[30px] w-[30px] cursor-pointer items-center justify-center lg:hidden"
+            className="menu relative z-[9999] flex h-[30px] w-[30px] cursor-pointer items-center justify-center lg:hidden"
             onClick={handleOpenMenu}
           >
             <span
@@ -63,9 +93,22 @@ const Header = () => {
               <IoCloseOutline size={32} color="#fff" />
             </span>
           </button>
-          <MobileNav openMenu={openMenu} resume={Resume} />
         </nav>
+        <MobileNav
+          openMenu={openMenu}
+          resume={Resume}
+          handleOpenMenu={handleOpenMenu}
+        />
       </header>
+      {/* BACK TO TOP */}
+      <button
+        onClick={handleToTop}
+        className={`fixed right-4 z-50 flex h-12 w-12 items-center  justify-center rounded-full border  border-neutral-800 bg-neutral-900 bg-opacity-80 text-neutral-50 backdrop-blur-lg duration-300 hover:bg-main-100 ${
+          isSticky ? "bottom-6" : "-bottom-12"
+        }`}
+      >
+        <BsArrowUpShort size={24} />
+      </button>
     </>
   );
 };

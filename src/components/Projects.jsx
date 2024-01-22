@@ -60,7 +60,7 @@ const myProjects = [
 
 const Projects = () => {
   return (
-    <section className="py-16">
+    <section id="projects" className="py-16 pt-20">
       <div className="wrapper">
         <Heading
           text=" Discover some of the products i've got the opportunity to work and learn about my process."
@@ -72,7 +72,7 @@ const Projects = () => {
               to={project.active ? project.link : "#"}
               target={project.active ? "_blank" : "_self"}
               key={index}
-              className="group w-full cursor-pointer overflow-hidden rounded-lg bg-neutral-900 p-5"
+              className="card group w-full cursor-pointer overflow-hidden rounded-lg bg-neutral-900 p-5"
             >
               <div className="w-full">
                 <span
