@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 const Contact = () => {
   // FORM SUBMIT
-  // const onSubmit = (e) => {
-  //   e.preventDefault();
-  // };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <>
@@ -49,6 +49,7 @@ const Contact = () => {
                 Write your message
               </h3>
               <form
+                onSubmit={handleSubmit}
                 id="contact-form"
                 className="contact-form flex w-full flex-col items-start"
               >

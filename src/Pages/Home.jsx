@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -7,8 +7,15 @@ import Projects from "../components/Projects";
 import Reviews from "../components/Reviews";
 import Services from "../components/Services";
 import ScrollReveal from "scrollreveal";
+import MobileNav from "../components/MobileNav";
+import Resume from "../assets/Abegunde-Resume.pdf";
 
 const Home = () => {
+  const [openMenu, setOpenMenu] = useState(false);
+  const handleOpenMenu = () => {
+    setOpenMenu((open) => !open);
+  };
+
   // const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -68,9 +75,8 @@ const Home = () => {
     });
 
     sr.reveal(".card", {
-      origin: "top",
+      origin: "left",
       interval: 500,
-      desktop: false,
     });
 
     sr.reveal(".heading", {
@@ -104,17 +110,17 @@ const Home = () => {
       scale: 0.85,
       mobile: false,
     });
-
-    sr.reveal(".card", {
-      origin: "bottom",
-      interval: 500,
-      mobile: false,
-    });
   }, []);
 
   return (
     <>
-      <Header />
+      <Header openMenu={openMenu} handleOpenMenu={handleOpenMenu} />
+      <MobileNav
+        setOpenMenu={setOpenMenu}
+        openMenu={openMenu}
+        resume={Resume}
+        handleOpenMenu={handleOpenMenu}
+      />
       <main className="overflow-clip">
         <Hero />
         <Projects />

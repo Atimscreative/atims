@@ -5,15 +5,11 @@ import { HiOutlineMenuAlt4 } from "react-icons/hi";
 import { IoCloseOutline } from "react-icons/io5";
 import { BsArrowUpShort } from "react-icons/bs";
 import { useEffect, useState } from "react";
-import MobileNav from "./MobileNav";
 import Resume from "../assets/Abegunde-Resume.pdf";
 
-const Header = () => {
+// eslint-disable-next-line react/prop-types
+const Header = ({ openMenu, handleOpenMenu }) => {
   const [isSticky, setIsSticky] = useState(false);
-  const [openMenu, setOpenMenu] = useState(false);
-  const handleOpenMenu = () => {
-    setOpenMenu((open) => !open);
-  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,7 +31,7 @@ const Header = () => {
   return (
     <>
       <header
-        className={`left-0 top-0 z-[999] w-full py-4 duration-300 ${
+        className={`left-0 top-0 z-[999] w-full overflow-x-hidden py-4 duration-300 ${
           isSticky
             ? "fixed translate-y-0 bg-primary-400 bg-opacity-70 shadow-lg backdrop-blur-xl"
             : "absolute -translate-y-1"
@@ -94,11 +90,6 @@ const Header = () => {
             </span>
           </button>
         </nav>
-        <MobileNav
-          openMenu={openMenu}
-          resume={Resume}
-          handleOpenMenu={handleOpenMenu}
-        />
       </header>
       {/* BACK TO TOP */}
       <button

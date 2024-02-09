@@ -9,7 +9,7 @@ html {
 }
 
 body {
-  @apply overflow-x-clip bg-neutral-950 font-urbanist font-normal text-neutral-400 antialiased;
+  @apply overflow-x-hidden bg-neutral-950 font-urbanist font-normal text-neutral-400 antialiased;
 }
 
 h1,

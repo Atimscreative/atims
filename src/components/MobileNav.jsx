@@ -1,8 +1,9 @@
+import { BsXLg } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
 
 // eslint-disable-next-line
-const MobileNav = ({ openMenu, resume, handleOpenMenu }) => {
+const MobileNav = ({ openMenu, resume, handleOpenMenu, setOpenMenu }) => {
   return (
     <>
       <section
@@ -11,7 +12,7 @@ const MobileNav = ({ openMenu, resume, handleOpenMenu }) => {
         }`}
       >
         <div
-          className={`mt-28 inline-flex flex-col items-center justify-center gap-14 p-8`}
+          className={`mt-16 inline-flex flex-col items-center justify-center gap-14 p-8`}
         >
           <ScrollLink to="hero" onClick={handleOpenMenu} className="nav-link">
             About
@@ -50,6 +51,12 @@ const MobileNav = ({ openMenu, resume, handleOpenMenu }) => {
             </Link>
           </div>
         </div>
+        <span
+          className="absolute right-5 top-5 cursor-pointer text-white"
+          onClick={() => setOpenMenu(!openMenu)}
+        >
+          <BsXLg size={24} />
+        </span>
       </section>
     </>
   );
