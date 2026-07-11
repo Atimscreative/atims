@@ -1,8 +1,21 @@
-# React + Vite
+# shadcn/ui monorepo template
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a Next.js monorepo template with shadcn/ui.
 
-Currently, two official plugins are available:
+## Adding components
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+To add components to your app, run the following command at the root of your `web` app:
+
+```bash
+pnpm dlx shadcn@latest add button -c apps/web
+```
+
+This will place the ui components in the `packages/ui/src/components` directory.
+
+## Using components
+
+To use the components in your app, import them from the `ui` package.
+
+```tsx
+import { Button } from "@workspace/ui/components/button";
+```

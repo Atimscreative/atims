@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Maya Chen — Frontend & Mobile App Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ============ TOKENS ============ */
+  :root{
+    --ink:#0a0a0a;
+    --paper:#fafafa;
+    --paper-dim:#f1f0ee;
+    --line:#dfddd8;
+    --line-strong:#b9b6b0;
+    --gray-700:#454341;
+    --gray-500:#86837e;
+    --font-display:'Space Grotesk', sans-serif;
+    --font-body:'Inter', sans-serif;
+    --font-mono:'JetBrains Mono', monospace;
+    --container:1180px;
+    --pad:clamp(1.25rem, 4vw, 3rem);
+    --gap-xl:clamp(4rem, 10vw, 8.5rem);
+    --gap-lg:clamp(2.5rem, 6vw, 4.5rem);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;text-decoration:none;}
+  ul{margin:0;padding:0;list-style:none;}
+  .wrap{max-width:var(--container);margin:0 auto;padding:0 var(--pad);}
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:.72rem;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--gray-500);
+    display:inline-flex;
+    align-items:center;
+    gap:.5em;
+  }
+  .eyebrow::before{content:"//";color:var(--line-strong);}
+  h1,h2,h3,h4{
+    font-family:var(--font-display);
+    font-weight:600;
+    line-height:1.1;
+    margin:0;
+    letter-spacing:-.01em;
+  }
+  h2{font-size:clamp(1.9rem, 3.4vw, 2.7rem);}
+  h3{font-size:clamp(1.15rem, 1.6vw, 1.35rem);}
+  p{margin:0;color:var(--gray-700);}
+  section{padding:var(--gap-xl) 0;border-top:1px solid var(--line);}
+  section:first-of-type{border-top:none;}
+  .section-head{
+    display:flex;
+    flex-direction:column;
+    gap:1.1rem;
+    max-width:640px;
+    margin-bottom:var(--gap-lg);
+  }
+  .section-head--wide{max-width:760px;}
+  .btn{
+    font-family:var(--font-mono);
+    font-size:.85rem;
+    letter-spacing:.02em;
+    display:inline-flex;
+    align-items:center;
+    gap:.6em;
+    padding:.9rem 1.5rem;
+    border-radius:2px;
+    border:1px solid var(--ink);
+    transition:background .15s ease, color .15s ease;
+    white-space:nowrap;
+  }
+  .btn--solid{background:var(--ink);color:var(--paper);}
+  .btn--solid:hover{background:var(--gray-700);}
+  .btn--ghost{background:transparent;color:var(--ink);}
+  .btn--ghost:hover{background:var(--ink);color:var(--paper);}
+  .btn-row{display:flex;gap:.9rem;flex-wrap:wrap;}
+
+  /* ============ NAV ============ */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    background:rgba(250,250,250,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav .wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    height:72px;
+  }
+  .nav__logo{font-family:var(--font-display);font-weight:700;font-size:1.05rem;letter-spacing:-.01em;}
+  .nav__logo span{color:var(--gray-500);font-weight:500;}
+  .nav__links{display:flex;align-items:center;gap:2.1rem;}
+  .nav__links a{
+    font-size:.92rem;color:var(--gray-700);
+    border-bottom:1px solid transparent;
+    padding-bottom:2px;
+  }
+  .nav__links a:hover{color:var(--ink);border-color:var(--ink);}
+  .nav__cta{display:none;}
+  .nav__toggle{
+    display:none;background:none;border:none;cursor:pointer;
+    width:32px;height:32px;position:relative;
+  }
+  .nav__toggle span{
+    position:absolute;left:4px;right:4px;height:1px;background:var(--ink);
+    transition:transform .2s ease, opacity .2s ease;
+  }
+  .nav__toggle span:nth-child(1){top:11px;}
+  .nav__toggle span:nth-child(2){top:17px;}
+  .nav__toggle span:nth-child(3){top:23px;}
+  .nav.is-open .nav__toggle span:nth-child(1){transform:translateY(6px) rotate(45deg);}
+  .nav.is-open .nav__toggle span:nth-child(2){opacity:0;}
+  .nav.is-open .nav__toggle span:nth-child(3){transform:translateY(-6px) rotate(-45deg);}
+
+  @media (max-width: 860px){
+    .nav__links{
+      position:absolute;top:72px;left:0;right:0;
+      background:var(--paper);
+      flex-direction:column;align-items:flex-start;
+      gap:0;
+      border-bottom:1px solid var(--line);
+      max-height:0;overflow:hidden;
+      transition:max-height .25s ease;
+    }
+    .nav.is-open .nav__links{max-height:340px;}
+    .nav__links a{width:100%;padding:1rem var(--pad);border-bottom:1px solid var(--line);}
+    .nav__links .btn{margin:1rem var(--pad);}
+    .nav__toggle{display:block;}
+  }
+
+  /* ============ HERO ============ */
+  .hero{padding-top:clamp(3.5rem,9vw,6rem);}
+  .hero .wrap{
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:var(--gap-lg);
+    align-items:end;
+  }
+  .hero__title{font-size:clamp(2.5rem, 6vw, 4.4rem);max-width:14ch;}
+  .hero__lede{
+    font-size:clamp(1.5rem,2.4vw,1.9rem);
+    font-family:var(--font-display);
+    font-weight:500;
+    margin-top:1.4rem;
+    max-width:24ch;
+  }
+  .hero__sub{
+    margin-top:1.6rem;font-size:1.05rem;max-width:46ch;
+  }
+  .hero__actions{margin-top:2.4rem;}
+  .hero__terminal{
+    font-family:var(--font-mono);
+    font-size:.92rem;
+    border:1px solid var(--line-strong);
+    background:var(--ink);
+    color:#d9d7d2;
+    border-radius:4px;
+    padding:1.4rem 1.5rem;
+    align-self:end;
+  }
+  .hero__terminal .dots{display:flex;gap:.4rem;margin-bottom:1rem;}
+  .hero__terminal .dots span{width:9px;height:9px;border-radius:50%;background:#3a3936;}
+  .hero__terminal-line{white-space:nowrap;overflow:hidden;}
+  .hero__terminal-line::before{content:"$ ";color:#73c991;}
+  .hero__terminal-cursor{display:inline-block;width:7px;height:1em;background:#d9d7d2;vertical-align:-2px;margin-left:2px;animation:blink 1s steps(1) infinite;}
+  @keyframes blink{50%{opacity:0;}}
+  @media (prefers-reduced-motion: reduce){.hero__terminal-cursor{animation:none;}}
+
+  @media (max-width: 860px){
+    .hero .wrap{grid-template-columns:1fr;}
+    .hero__terminal{order:-1;}
+  }
+
+  /* ============ TRUST ============ */
+  .trust{padding-top:var(--gap-lg);padding-bottom:var(--gap-lg);}
+  .trust__grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;
+    margin-bottom:var(--gap-lg);
+  }
+  .trust__stat .num{font-family:var(--font-display);font-size:clamp(2rem,3.4vw,2.6rem);font-weight:700;}
+  .trust__stat .lbl{font-size:.85rem;color:var(--gray-500);margin-top:.3rem;}
+  .trust__logos{
+    display:flex;flex-wrap:wrap;gap:2.6rem;
+    padding-top:var(--gap-lg);border-top:1px solid var(--line);
+    font-family:var(--font-display);font-weight:600;color:var(--gray-500);
+    letter-spacing:-.01em;font-size:1.05rem;
+  }
+  @media (max-width:760px){.trust__grid{grid-template-columns:repeat(2,1fr);}}
+
+  /* ============ OUTCOMES ============ */
+  .outcomes__grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+    background:var(--line);border:1px solid var(--line);
+  }
+  .outcomes__card{background:var(--paper);padding:2.2rem;}
+  .outcomes__card .eyebrow{margin-bottom:1rem;}
+  .outcomes__card p{margin-top:.7rem;font-size:.95rem;}
+  @media (max-width:860px){.outcomes__grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:560px){.outcomes__grid{grid-template-columns:1fr;}}
+
+  /* ============ SERVICES ============ */
+  .services__list{display:flex;flex-direction:column;}
+  .service{
+    display:grid;grid-template-columns:.9fr 1.4fr 1fr;gap:2.5rem;
+    padding:2.4rem 0;border-top:1px solid var(--line);
+  }
+  .services__list .service:first-child{border-top:1px solid var(--line);}
+  .service__name{font-family:var(--font-display);font-weight:600;font-size:1.2rem;}
+  .service__col .lbl{
+    font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--gray-500);margin-bottom:.5rem;display:block;
+  }
+  .service__col p{font-size:.93rem;}
+  @media (max-width:860px){
+    .service{grid-template-columns:1fr;gap:1rem;}
+  }
+
+  /* ============ CASE STUDIES ============ */
+  .case{
+    border:1px solid var(--line);
+    margin-bottom:1.6rem;
+    display:grid;grid-template-columns:1fr 1.3fr;
+  }
+  .case__visual{
+    background:var(--ink);color:var(--paper);
+    padding:2.4rem;display:flex;flex-direction:column;justify-content:space-between;
+    min-height:280px;
+  }
+  .case__visual .eyebrow{color:#9a9892;}
+  .case__visual .eyebrow::before{color:#55534f;}
+  .case__visual h3{color:var(--paper);font-size:clamp(1.3rem,2vw,1.6rem);margin-top:1rem;max-width:18ch;}
+  .case__tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.5rem;}
+  .case__tags span{
+    font-family:var(--font-mono);font-size:.72rem;color:#cfcdc8;
+    border:1px solid #3a3936;border-radius:2px;padding:.25rem .55rem;
+  }
+  .case__body{padding:2.4rem;display:grid;gap:1.4rem;}
+  .case__row .lbl{
+    font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--gray-500);display:block;margin-bottom:.4rem;
+  }
+  .case__row p, .case__row ul{font-size:.93rem;}
+  .case__row ul{display:flex;flex-direction:column;gap:.3rem;}
+  .case__row ul li::before{content:"— ";color:var(--gray-500);}
+  @media (max-width:860px){
+    .case{grid-template-columns:1fr;}
+    .case__visual{min-height:auto;}
+  }
+
+  /* ============ PROCESS ============ */
+  .process__list{display:flex;flex-direction:column;}
+  .process__item{
+    display:grid;grid-template-columns:80px 1fr 1.6fr;gap:2rem;
+    padding:1.8rem 0;border-top:1px solid var(--line);align-items:baseline;
+  }
+  .process__list .process__item:first-child{border-top:1px solid var(--line);}
+  .process__num{font-family:var(--font-mono);color:var(--line-strong);font-size:.95rem;}
+  .process__name{font-family:var(--font-display);font-weight:600;font-size:1.05rem;}
+  .process__item p{font-size:.92rem;}
+  @media (max-width:760px){
+    .process__item{grid-template-columns:40px 1fr;}
+    .process__item p{grid-column:1 / -1;margin-top:.4rem;}
+  }
+
+  /* ============ ABOUT ============ */
+  .about{display:grid;grid-template-columns:.8fr 1.2fr;gap:var(--gap-lg);}
+  .about__principles{display:grid;gap:1.6rem;}
+  .about__principle .lbl{
+    font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--gray-500);display:block;margin-bottom:.4rem;
+  }
+  .about__principle p{font-size:.95rem;}
+  @media (max-width:860px){.about{grid-template-columns:1fr;}}
+
+  /* ============ STACK ============ */
+  .stack__grid{display:flex;flex-wrap:wrap;gap:.7rem;}
+  .stack__chip{
+    font-family:var(--font-mono);font-size:.85rem;
+    border:1px solid var(--line-strong);border-radius:2px;
+    padding:.6rem 1rem;color:var(--gray-700);
+  }
+  .stack__chip::before{content:"--";color:var(--gray-500);}
+  .stack__note{margin-top:1.6rem;font-size:.9rem;max-width:48ch;}
+
+  /* ============ TESTIMONIALS ============ */
+  .testi__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);}
+  .testi__card{background:var(--paper);padding:2.2rem;display:flex;flex-direction:column;justify-content:space-between;min-height:240px;}
+  .testi__quote{font-size:1.02rem;font-family:var(--font-display);font-weight:500;line-height:1.45;}
+  .testi__who{margin-top:1.4rem;font-size:.85rem;color:var(--gray-500);font-family:var(--font-mono);}
+  @media (max-width:860px){.testi__grid{grid-template-columns:1fr;}}
+
+  /* ============ FINAL CTA ============ */
+  .final{text-align:center;}
+  .final h2{max-width:18ch;margin:0 auto;}
+  .final p{max-width:42ch;margin:1.2rem auto 0;}
+  .final .btn-row{justify-content:center;margin-top:2.2rem;}
+
+  /* ============ FOOTER ============ */
+  footer{border-top:1px solid var(--line);padding:3rem 0;}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;align-items:center;}
+  footer .f-links{display:flex;gap:1.8rem;font-size:.88rem;color:var(--gray-700);}
+  footer .f-copy{font-family:var(--font-mono);font-size:.78rem;color:var(--gray-500);}
+
+  /* ============ REVEAL ============ */
+  .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease, transform .5s ease;}
+  .reveal.is-visible{opacity:1;transform:none;}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+  }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a href="#" class="nav__logo">Maya Chen <span>/ dev</span></a>
+    <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav__links" id="navLinks">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact" class="btn btn--solid">Book a call</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">frontend &amp; mobile app development</span>
+      <h1 class="hero__title">Ship the product your users actually want to use.</h1>
+      <p class="hero__lede">I help startups turn ideas into fast, scalable web and mobile apps.</p>
+      <p class="hero__sub">Design files, a rough sketch, or just a problem worth solving — I build the production-ready frontend and mobile experience around it, and keep you in the loop the whole way.</p>
+      <div class="hero__actions btn-row">
+        <a href="#contact" class="btn btn--solid">Book a call</a>
+        <a href="#work" class="btn btn--ghost">View work</a>
+      </div>
+    </div>
+    <div class="hero__terminal" aria-hidden="true">
+      <div class="dots"><span></span><span></span><span></span></div>
+      <div class="hero__terminal-line"><span id="terminalText">build --for fintech-startup</span><span class="hero__terminal-cursor" aria-hidden="true"></span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ TRUST ============ -->
+<section class="trust">
+  <div class="wrap">
+    <div class="trust__grid reveal">
+      <div class="trust__stat"><div class="num">5+</div><div class="lbl">years shipping production apps</div></div>
+      <div class="trust__stat"><div class="num">30+</div><div class="lbl">products launched</div></div>
+      <div class="trust__stat"><div class="num">12</div><div class="lbl">startups, 4 funded post-launch</div></div>
+      <div class="trust__stat"><div class="num">98%</div><div class="lbl">on-time delivery</div></div>
+    </div>
+    <div class="trust__logos reveal">
+      <span>Northwind Labs</span><span>Fernbank</span><span>Loop Health</span><span>Daybreak Goods</span><span>Arcway</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OUTCOMES ============ -->
+<section id="outcomes">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">what you get</span>
+      <h2>Outcomes, not deliverables.</h2>
+    </div>
+    <div class="outcomes__grid reveal">
+      <div class="outcomes__card">
+        <span class="eyebrow">launch faster</span>
+        <p>A scoped, sequenced build plan means your product ships in weeks, not quarters — without cutting corners on quality.</p>
+      </div>
+      <div class="outcomes__card">
+        <span class="eyebrow">better ux</span>
+        <p>Interfaces that feel obvious to use, so fewer support tickets and higher activation from day one.</p>
+      </div>
+      <div class="outcomes__card">
+        <span class="eyebrow">design → code</span>
+        <p>Your Figma file becomes a pixel-accurate, responsive build — not an approximation of it.</p>
+      </div>
+      <div class="outcomes__card">
+        <span class="eyebrow">responsive by default</span>
+        <p>Every screen is built mobile-first and tested across real devices, not just resized in a browser.</p>
+      </div>
+      <div class="outcomes__card">
+        <span class="eyebrow">architecture that scales</span>
+        <p>A frontend structure your next hire can actually read — built to take new features, not just survive them.</p>
+      </div>
+      <div class="outcomes__card">
+        <span class="eyebrow">one codebase, two platforms</span>
+        <p>A single React Native codebase ships to iOS and Android, so you maintain one app, not two.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">services</span>
+      <h2>Pick a problem. Here's how it gets solved.</h2>
+    </div>
+    <div class="services__list reveal">
+      <div class="service">
+        <div class="service__col"><span class="service__name">Frontend Development</span></div>
+        <div class="service__col"><span class="lbl">problem</span><p>Your product idea has no working interface, or the current one is slow and hard to maintain.</p></div>
+        <div class="service__col"><span class="lbl">result</span><p>A fast, accessible React/Next.js app your team can build on for years.</p></div>
+      </div>
+      <div class="service">
+        <div class="service__col"><span class="service__name">Mobile App Development</span></div>
+        <div class="service__col"><span class="lbl">problem</span><p>You need an app on iOS and Android, but two native teams isn't in the budget.</p></div>
+        <div class="service__col"><span class="lbl">result</span><p>One React Native / Expo codebase, shipped to both stores.</p></div>
+      </div>
+      <div class="service">
+        <div class="service__col"><span class="service__name">Design-to-Code Conversion</span></div>
+        <div class="service__col"><span class="lbl">problem</span><p>Your designer's Figma file is finished, but no one's translated it into a real build.</p></div>
+        <div class="service__col"><span class="lbl">result</span><p>A pixel-accurate, responsive implementation that matches the design file, not a rough copy of it.</p></div>
+      </div>
+      <div class="service">
+        <div class="service__col"><span class="service__name">MVP Development</span></div>
+        <div class="service__col"><span class="lbl">problem</span><p>You need something real to put in front of users or investors — soon.</p></div>
+        <div class="service__col"><span class="lbl">result</span><p>A lean, working product, scoped to test your core assumption first.</p></div>
+      </div>
+      <div class="service">
+        <div class="service__col"><span class="service__name">Product Maintenance</span></div>
+        <div class="service__col"><span class="lbl">problem</span><p>Your app works, but bugs pile up and no one owns the frontend long-term.</p></div>
+        <div class="service__col"><span class="lbl">result</span><p>Ongoing fixes, updates, and small features — without re-explaining your codebase each time.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CASE STUDIES ============ -->
+<section id="work">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">featured work</span>
+      <h2>Recent projects, told as business outcomes.</h2>
+    </div>
+
+    <div class="case reveal">
+      <div class="case__visual">
+        <div>
+          <span class="eyebrow">fintech startup</span>
+          <h3>A dashboard rebuilt around what users actually check daily.</h3>
+        </div>
+        <div class="case__tags">
+          <span>React</span><span>TypeScript</span><span>Tailwind</span>
+        </div>
+      </div>
+      <div class="case__body">
+        <div class="case__row"><span class="lbl">problem</span><p>Customers were abandoning the dashboard within seconds — the legacy build buried key account data three clicks deep.</p></div>
+        <div class="case__row"><span class="lbl">approach</span><p>Mapped the five tasks users ran most often, rebuilt the information hierarchy around them, and re-platformed from jQuery to React.</p></div>
+        <div class="case__row"><span class="lbl">outcome</span><ul><li>43% drop in average time-to-task</li><li>Support tickets about "finding" things fell by a third</li><li>Shipped in six weeks alongside the existing app</li></ul></div>
+      </div>
+    </div>
+
+    <div class="case reveal">
+      <div class="case__visual">
+        <div>
+          <span class="eyebrow">dtc retail brand</span>
+          <h3>One codebase replaced a slow webview wrapper on both stores.</h3>
+        </div>
+        <div class="case__tags">
+          <span>React Native</span><span>Expo</span><span>Firebase</span>
+        </div>
+      </div>
+      <div class="case__body">
+        <div class="case__row"><span class="lbl">problem</span><p>Their "app" was a webview wrapper around the mobile site — slow, with a 2.6-star rating and frequent crash reports.</p></div>
+        <div class="case__row"><span class="lbl">approach</span><p>Rebuilt natively in React Native, kept the existing checkout API, and added push notifications and offline cart support.</p></div>
+        <div class="case__row"><span class="lbl">outcome</span><ul><li>Store rating moved from 2.6 to 4.7</li><li>Push-driven sessions became a top-three traffic source</li><li>One team now maintains iOS and Android together</li></ul></div>
+      </div>
+    </div>
+
+    <div class="case reveal">
+      <div class="case__visual">
+        <div>
+          <span class="eyebrow">healthtech, pre-seed</span>
+          <h3>An MVP built to test one assumption before the next funding round.</h3>
+        </div>
+        <div class="case__tags">
+          <span>Next.js</span><span>Supabase</span><span>Tailwind</span>
+        </div>
+      </div>
+      <div class="case__body">
+        <div class="case__row"><span class="lbl">problem</span><p>The founders needed a working product for investor meetings in six weeks — with no engineering team yet in place.</p></div>
+        <div class="case__row"><span class="lbl">approach</span><p>Scoped a single core flow (patient intake to provider match), cut everything else, and built it directly on Supabase to skip backend setup.</p></div>
+        <div class="case__row"><span class="lbl">outcome</span><ul><li>Live demo ready in five and a half weeks</li><li>Used in every subsequent investor meeting</li><li>Closed their seed round the following month</li></ul></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section id="process">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">how we'd work together</span>
+      <h2>A process built to remove surprises.</h2>
+    </div>
+    <div class="process__list reveal">
+      <div class="process__item">
+        <span class="process__num">01</span>
+        <span class="process__name">Discovery</span>
+        <p>A short call to understand the problem, your users, and what "done" actually looks like.</p>
+      </div>
+      <div class="process__item">
+        <span class="process__num">02</span>
+        <span class="process__name">Planning</span>
+        <p>A written scope and timeline, broken into milestones you can check progress against.</p>
+      </div>
+      <div class="process__item">
+        <span class="process__num">03</span>
+        <span class="process__name">Design review</span>
+        <p>I flag UX or feasibility issues in your designs before a single line of code gets written.</p>
+      </div>
+      <div class="process__item">
+        <span class="process__num">04</span>
+        <span class="process__name">Development</span>
+        <p>Weekly check-ins and a staging link you can click through at any point — no black box.</p>
+      </div>
+      <div class="process__item">
+        <span class="process__num">05</span>
+        <span class="process__name">Testing</span>
+        <p>Cross-device and cross-browser QA, plus a pass on accessibility and edge cases.</p>
+      </div>
+      <div class="process__item">
+        <span class="process__num">06</span>
+        <span class="process__name">Launch</span>
+        <p>Deployed, monitored, and handed off with documentation — not just a "good luck."</p>
+      </div>
+      <div class="process__item">
+        <span class="process__num">07</span>
+        <span class="process__name">Support</span>
+        <p>An optional retainer for fixes and small features once your product is live and growing.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about">
+  <div class="wrap about">
+    <div class="reveal">
+      <span class="eyebrow">about</span>
+      <h2>Why I build it this way.</h2>
+      <p style="margin-top:1.4rem;font-size:1.02rem;">I started out fixing other people's rushed MVPs — most of the problems traced back to unclear scope, not bad code. So I work backward from your business outcome first, and let that decide the technical approach, not the other way around.</p>
+    </div>
+    <div class="about__principles reveal">
+      <div class="about__principle">
+        <span class="lbl">how I work</span>
+        <p>Small, shippable milestones with a staging link you can check at any time — you'll never be waiting on a surprise reveal.</p>
+      </div>
+      <div class="about__principle">
+        <span class="lbl">communication</span>
+        <p>One weekly update, async by default, with a same-day reply window on anything blocking. No status-meeting theater.</p>
+      </div>
+      <div class="about__principle">
+        <span class="lbl">development philosophy</span>
+        <p>Ship the smallest version that proves the idea, then add complexity only when real usage asks for it.</p>
+      </div>
+      <div class="about__principle">
+        <span class="lbl">what to expect</span>
+        <p>A written scope before any code, honest timelines, and a heads-up the moment something looks like it'll slip — not after.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STACK ============ -->
+<section id="stack">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">tech stack</span>
+      <h2>Tools chosen for what they let you do next.</h2>
+    </div>
+    <div class="stack__grid reveal">
+      <span class="stack__chip">react</span>
+      <span class="stack__chip">nextjs</span>
+      <span class="stack__chip">typescript</span>
+      <span class="stack__chip">tailwindcss</span>
+      <span class="stack__chip">react-native</span>
+      <span class="stack__chip">expo</span>
+      <span class="stack__chip">firebase</span>
+      <span class="stack__chip">supabase</span>
+    </div>
+    <p class="stack__note reveal">Every one of these was picked because it ships fast today and won't box you in tomorrow — not because it's trending.</p>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section id="testimonials">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">in their words</span>
+      <h2>What it's like to work together.</h2>
+    </div>
+    <div class="testi__grid reveal">
+      <div class="testi__card">
+        <p class="testi__quote">"We had a Figma file and a deadline. Maya turned it into a working app faster than I thought was possible, and it matched the design exactly."</p>
+        <p class="testi__who">J. Patel — Co-founder, fintech startup</p>
+      </div>
+      <div class="testi__card">
+        <p class="testi__quote">"The weekly updates meant we always knew where things stood. No chasing, no surprises at the end."</p>
+        <p class="testi__who">R. Alston — Head of Product, DTC brand</p>
+      </div>
+      <div class="testi__card">
+        <p class="testi__quote">"We needed a demo for investors in six weeks. It was ready in five, and it's the reason we got funded."</p>
+        <p class="testi__who">S. Okafor — Founder, healthtech</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section id="contact" class="final">
+  <div class="wrap">
+    <span class="eyebrow">let's talk</span>
+    <h2 style="margin-top:1rem;">Have an idea to build or improve?</h2>
+    <p>Tell me where things stand and what you're trying to get to — I'll tell you honestly whether I can help and what it'd take.</p>
+    <div class="btn-row">
+      <a href="mailto:hello@mayachen.dev" class="btn btn--solid">Book a call</a>
+      <a href="mailto:hello@mayachen.dev" class="btn btn--ghost">hello@mayachen.dev</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="f-copy">© 2026 Maya Chen — replace with your own details</span>
+    <div class="f-links">
+      <a href="mailto:hello@mayachen.dev">Email</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">WhatsApp</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // mobile nav toggle
+  const nav = document.getElementById('nav');
+  const navToggle = document.getElementById('navToggle');
+  navToggle.addEventListener('click', () => {
+    const isOpen = nav.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', isOpen);
+  });
+  document.querySelectorAll('#navLinks a').forEach(a => {
+    a.addEventListener('click', () => nav.classList.remove('is-open'));
+  });
+
+  // scroll reveal
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!prefersReduced && 'IntersectionObserver' in window) {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+  } else {
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+  }
+
+  // hero terminal line rotator
+  if (!prefersReduced) {
+    const lines = [
+      'build --for fintech-startup',
+      'build --for dtc-brand',
+      'build --for healthtech-mvp',
+      'build --for your-product'
+    ];
+    const el = document.getElementById('terminalText');
+    let i = 0;
+    setInterval(() => {
+      i = (i + 1) % lines.length;
+      el.style.opacity = 0;
+      setTimeout(() => { el.textContent = lines[i]; el.style.opacity = 1; }, 200);
+    }, 2600);
+    el.style.transition = 'opacity .2s ease';
+  }
+</script>
+</body>
+</html>
