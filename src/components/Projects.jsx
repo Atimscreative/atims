@@ -36,7 +36,7 @@ const myProjects = [
     prototype: Morero,
     tools: ["CodeIgniter(PHP)", "Bootstrap", "Web App"],
     title: "Morero.co.uk",
-    link: "https://morero.co.uk/",
+    link: "https://www.morero.io/",
     description: "Digital Construction Project Management Software",
     active: true,
   },
